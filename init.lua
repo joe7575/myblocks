@@ -396,6 +396,7 @@ minetest.register_tool("myblocks:wand", {
 			local stack = inv:get_stack("main", 1)
 			local taken = stack:take_item(1)
 			if taken:get_count() == 1 then
+				inv:remove_item("main", ItemStack(taken:get_name()))
 				minetest.set_node(pos, {name = taken:get_name()})
 				itemstack:add_wear(65535 / (100 - 1))
 				minetest.log("action", user:get_player_name().." nutzt Zauberstab an pos "..S(pos))
