@@ -408,6 +408,22 @@ minetest.register_tool("myblocks:wand", {
 	end,
 })
 
+minetest.register_chatcommand("peng", {
+	description = "Makes peng :)",
+	func = function(name, param)
+		if minetest.check_player_privs(name, "settler") then
+			local player = minetest.get_player_by_name(name)
+			local pos = player:get_pos()
+			minetest.sound_play({
+				name="myblocks_peng"},{
+				pos = pos,
+				gain=2,
+				max_hear_distance=15,
+				loop=false})
+		end
+	end,
+})
+
 
 minetest.register_alias("fachwerk:cherry_leaves", "myblocks:cherry_leaves")
 minetest.register_alias("fachwerk:cherry_leaves2", "myblocks:cherry_leaves2")
