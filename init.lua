@@ -174,6 +174,19 @@ minetest.register_node("myblocks:shaftU", {
 	sounds = default.node_sound_glass_defaults(),
 })
 
+minetest.register_node("myblocks:Xglass", {
+	description = "X Glas by JoSto",
+	tiles = {"myblocks_shaft.png"},
+	drawtype = "glasslike",
+	paramtype = "light",
+	light_source = 9,
+	sunlight_propagates = true,
+	use_texture_alpha = true,
+	is_ground_content = false,
+	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3},
+	sounds = default.node_sound_glass_defaults(),
+})
+
 
 minetest.register_craft({
     output = "myblocks:shaft 4",
@@ -189,6 +202,16 @@ minetest.register_craft({
     output = "myblocks:shaftU",
     recipe = {"myblocks:shaft"},
 })
+
+minetest.register_craft({
+    output = "myblocks:Xglass 8",
+    recipe = {
+        {"default:glass","default:torch", "default:glass"},
+        {"default:glass","default:torch", "default:glass"},
+        {"default:glass","default:glass", "default:glass"}
+    }
+})
+
 
 minetest.register_node("myblocks:cherry_leaves", {
     description = "Cherry Leaves",
@@ -408,6 +431,65 @@ minetest.register_tool("myblocks:wand", {
 	end,
 })
 
+--limited edition tools: christmas
+minetest.register_tool("myblocks:pick_christmas", {
+	description = "Christmas Pick Axe",
+	inventory_image = "christmas_pickaxe.png",
+	tool_capabilities = {
+		full_punch_interval = 0.9,
+		max_drop_level=3,
+		groupcaps={
+			cracky = {times={[1]=2.0, [2]=1.0, [3]=0.50}, uses=50, maxlevel=3},
+		},
+		damage_groups = {fleshy=5},
+	},
+	sound = {breaks = "default_tool_breaks"},
+})
+
+
+minetest.register_tool("myblocks:christmaxe", {
+	description = "Christmaxe",
+	inventory_image = "christmaxe.png",
+	tool_capabilities = {
+		full_punch_interval = 0.9,
+		max_drop_level=1,
+		groupcaps={
+			choppy={times={[1]=2.00, [2]=0.80, [3]=0.40}, uses=50, maxlevel=3},
+		},
+		damage_groups = {fleshy=7},
+	},
+	sound = {breaks = "default_tool_breaks"},
+})
+
+minetest.register_tool("myblocks:shovel_snow", {
+	description = "Snow Shovel",
+	inventory_image = "snow_shovel.png",
+	tool_capabilities = {
+		full_punch_interval = 1.0,
+		max_drop_level=1,
+		groupcaps={
+			crumbly = {times={[1]=1.10, [2]=0.50, [3]=0.30}, uses=50, maxlevel=3},
+		},
+		damage_groups = {fleshy=4},
+	},
+	sound = {breaks = "default_tool_breaks"},
+})
+
+minetest.register_tool("myblocks:sword_sugar", {
+	description = "Sugar Sword",
+	inventory_image = "sugar_sword.png",
+	tool_capabilities = {
+		full_punch_interval = 0.7,
+		max_drop_level=1,
+		groupcaps={
+			sugary={times={[1]=0.80}, uses=50, maxlevel=1},
+		},
+		damage_groups = {fleshy=0},
+	},
+	sound = {breaks = "default_tool_breaks"},
+})
+
+
 minetest.register_chatcommand("peng", {
 	description = "Makes peng :)",
 	func = function(name, param)
@@ -422,6 +504,20 @@ minetest.register_chatcommand("peng", {
 				loop=false})
 		end
 	end,
+})
+
+minetest.register_entity("myblocks:settler", {
+   visual = "mesh",
+   mesh = "character.b3d",
+   textures = {"character.png"},
+   collisionbox = {-0.5, 0.0, -0.5, 0.5, 2.0, 0.5},
+   makes_footstep_sound = false,
+   on_activate = function(self, staticdata)
+      -- Make immortal
+      self.object:set_armor_groups({immortal = 1})
+      -- Set animation
+      self.object:set_animation({x=1,y=40}, 30)
+   end,
 })
 
 

@@ -1,6 +1,6 @@
 # myblocks
 
-Some more or less useful blocks and tools.
+Some more or less useful blocks and tools, used on the server "Joes Miniwelt".
 
 ## Dependencies
 default  
