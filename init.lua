@@ -11,6 +11,8 @@
 
 ]]--
 
+myblocks = {}
+
 -- for lazy programmers
 local S = function(pos) if pos then return minetest.pos_to_string(pos) end end
 local P = minetest.string_to_pos
@@ -21,9 +23,6 @@ local function register_node(name, desc, tiles)
 	minetest.register_node("myblocks:"..name, {
 		description = desc,
 		tiles = tiles,
-		paramtype = "light",
-		light_source = 0,	
-		sunlight_propagates = true,
 		paramtype2 = "facedir",
 		groups = {cracky=2, crumbly=2, choppy=2},
 		is_ground_content = false,
@@ -42,17 +41,17 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	type="shapeless",
-	output = "myblocks:reet",
-	recipe = {"farming:straw"}
+	output = "myblocks:reet 2",
+	recipe = {
+		{"farming:straw", "farming:straw", ""},
+		{"default:stick", "default:stick", ""},
+		{"", "", ""},
+	}
 })
 
 minetest.register_node("myblocks:brick", {
 	description = "Brick by unknown",
 	tiles = {"myblocks_brick.png"},
-	paramtype = "light",
-	light_source = 0,	
-	sunlight_propagates = true,
 	paramtype2 = "facedir",
 	groups = {cracky=2, crumbly=2, choppy=2},
 	is_ground_content = false,
@@ -61,9 +60,22 @@ minetest.register_node("myblocks:brick", {
 
 
 minetest.register_craft({
-	type="shapeless",
 	output = "myblocks:brick",
-	recipe = {"default:brick"},
+	recipe = {
+		{"default:clay_brick", "default:clay_brick"},
+		{"basic_materials:wet_cement", "default:clay_brick"},
+	},
+})
+
+minetest.register_node("myblocks:leaves", {
+	description = "Apple Tree Leaves",
+	drawtype = "allfaces_optional",
+	waving = 1,
+	tiles = {"default_leaves_simple.png"},
+	paramtype = "light",
+	is_ground_content = false,
+	groups = {snappy = 3, leafdecay = 3, flammable = 2, leaves = 1},
+	sounds = default.node_sound_leaves_defaults(),
 })
 
 if minetest.get_modpath("moreblocks") then
@@ -85,6 +97,26 @@ if minetest.get_modpath("moreblocks") then
 		tiles={"myblocks_brick.png"},
 		sounds = default.node_sound_stone_defaults(),
 	})
+
+        -- Blaetter fuer die Saege
+	stairsplus:register_all("myblocks", "leaves", "default:leaves", {
+		description="Apple Tree Leaves",
+		groups={snappy = 3, leafdecay = 3, flammable = 2, leaves = 1},
+		tiles={"default_leaves_simple.png"},
+		sounds = default.node_sound_leaves_defaults(),
+	})
+--	stairsplus:register_all("myblocks", "brick", "myblocks:brick", {
+--		description="Brick by unknown",
+--		groups={cracky=2, crumbly=2, choppy=2, not_in_creative_inventory=1},
+--		tiles={"myblocks_brick.png"},
+--		sounds = default.node_sound_stone_defaults(),
+--	})
+--	stairsplus:register_all("myblocks", "brick", "myblocks:brick", {
+--		description="Brick by unknown",
+--		groups={cracky=2, crumbly=2, choppy=2, not_in_creative_inventory=1},
+--		tiles={"myblocks_brick.png"},
+--		sounds = default.node_sound_stone_defaults(),
+--	})
 
 	stairsplus:register_alias_all("fachwerk", "bukki", "myblocks", "bukki")
 	stairsplus:register_alias_all("fachwerk", "reet", "myblocks", "reet")
@@ -291,12 +323,38 @@ if minetest.get_modpath("screwdriver") then
 			inventory_image = "myblocks_screwdriver.png",
 
 			on_use = function(itemstack, user, pointed_thing)
-				screwdriver.handler(itemstack, user, pointed_thing, screwdriver.ROTATE_FACE, 2000)
+				if user:get_player_control().sneak then
+					-- swap_node with new stored param2
+					local pos = pointed_thing.under
+					if pos then
+						local node = minetest.get_node(pos)
+						if user:get_attribute("mytool_screwdriver_name") == node.name then
+							local ndef = minetest.registered_nodes[node.name]
+							if ndef and ndef.on_rotate ~= screwdriver.disallow then
+								local param2 = user:get_attribute("mytool_screwdriver_param2")
+								minetest.swap_node(pos, {name = node.name, param2 = param2})
+							end
+						end
+					end
+				else
+					screwdriver.handler(itemstack, user, pointed_thing, screwdriver.ROTATE_FACE, 2000)
+				end
 				return itemstack
 			end,
 
 			on_place = function(itemstack, user, pointed_thing)
-				screwdriver.handler(itemstack, user, pointed_thing, screwdriver.ROTATE_AXIS, 2000)
+				if user:get_player_control().sneak then
+					-- read param2 and node name
+					local pos = pointed_thing.under
+					if pos then
+						local node = minetest.get_node(pos)
+						user:set_attribute("mytool_screwdriver_name", node.name)
+						user:set_attribute("mytool_screwdriver_param2", node.param2)
+						minetest.chat_send_player(user:get_player_name(), "Blockausrichtung gespeichert!")
+					end
+				else
+					screwdriver.handler(itemstack, user, pointed_thing, screwdriver.ROTATE_AXIS, 2000)
+				end
 				return itemstack
 			end,
 		})
@@ -311,57 +369,6 @@ if minetest.get_modpath("screwdriver") then
 		})
 	end
 end
-
-
-
---
--- Admin Tool
---
-local function clear_objects(itemstack, placer, pointed_thing)
-	local pos = placer:get_pos()
-	local pos1x, pos1y, pos1z = pos.x - 1.5, pos.y - 0.5, pos.z - 1.5
-	local pos2x, pos2y, pos2z = pos.x + 1.5, pos.y + 2.5, pos.z + 1.5
-
-	for _, obj in pairs(minetest.get_objects_inside_radius(pos, 3)) do
-		local entity = obj:get_luaentity()
-		print("entity")
-		-- Avoid players
-		if not obj:is_player() then
-			local pos = obj:getpos()
-			print(dump(pos))
-			if pos.x >= pos1x and pos.x <= pos2x and
-					pos.y >= pos1y and pos.y <= pos2y and
-					pos.z >= pos1z and pos.z <= pos2z then
-				-- Inside region
-				obj:remove()
-			end
-		end
-	end
-end
-
-local function remove_node(itemstack, placer, pointed_thing)
-	if minetest.check_player_privs(placer:get_player_name(), "server") then
-		if pointed_thing.type == "node" then
-			local pos = pointed_thing.under
-			minetest.remove_node(pos)
-		end
-	else
-		minetest.chat_send_player(placer:get_player_name(), "You don't have the necessary privs!")
-	end
-end
-
-minetest.register_node("myblocks:admin_tool", {
-	description = "Admin Tool",
-	inventory_image = "myblocks_tool.png",
-	wield_image = "myblocks_tool.png",
-	use_texture_alpha = true,
-	groups = {cracky=1, book=1},
-	on_use = remove_node,
-	on_place = clear_objects,
-	on_secondary_use = clear_objects,
-	node_placement_prediction = "",
-	stack_max = 1,
-})
 
 
 --
@@ -419,10 +426,14 @@ minetest.register_tool("myblocks:wand", {
 			local stack = inv:get_stack("main", 1)
 			local taken = stack:take_item(1)
 			if taken:get_count() == 1 then
-				inv:remove_item("main", ItemStack(taken:get_name()))
-				minetest.set_node(pos, {name = taken:get_name()})
-				itemstack:add_wear(65535 / (100 - 1))
-				minetest.log("action", user:get_player_name().." nutzt Zauberstab an pos "..S(pos))
+				local item_name = taken:get_name()
+				local ndef = minetest.registered_nodes[item_name]
+				if ndef then
+					inv:remove_item("main", ItemStack(item_name))
+					minetest.set_node(pos, {name = item_name})
+					itemstack:add_wear(65535 / (100 - 1))
+					minetest.log("action", user:get_player_name().." nutzt Zauberstab an pos "..S(pos))
+				end
 			end
 		else
 			minetest.chat_send_player(user:get_player_name(), "Du hast keine Superminer privs!")
@@ -493,7 +504,7 @@ minetest.register_tool("myblocks:sword_sugar", {
 minetest.register_chatcommand("peng", {
 	description = "Makes peng :)",
 	func = function(name, param)
-		if minetest.check_player_privs(name, "settler") then
+		if minetest.check_player_privs(name, "miniminer") then
 			local player = minetest.get_player_by_name(name)
 			local pos = player:get_pos()
 			minetest.sound_play({
@@ -506,19 +517,95 @@ minetest.register_chatcommand("peng", {
 	end,
 })
 
-minetest.register_entity("myblocks:settler", {
-   visual = "mesh",
-   mesh = "character.b3d",
-   textures = {"character.png"},
-   collisionbox = {-0.5, 0.0, -0.5, 0.5, 2.0, 0.5},
-   makes_footstep_sound = false,
-   on_activate = function(self, staticdata)
-      -- Make immortal
-      self.object:set_armor_groups({immortal = 1})
-      -- Set animation
-      self.object:set_animation({x=1,y=40}, 30)
-   end,
+local board_box = {
+	type = "wallmounted",
+    wall_side = {-16/32, -16/32, -12/32, -15/32, 16/32, 12/32},
+}
+
+minetest.register_node("myblocks:monalisa", {
+	description = "MyBlocks Monalisa",
+	inventory_image = 'myblocks_monalisa.png',
+	tiles = {"myblocks_monalisa.png"},
+	drawtype = "nodebox",
+	node_box = board_box,
+	selection_box = board_box,
+	paramtype2 = "wallmounted",
+	paramtype = "light",
+	sunlight_propagates = true,
+	is_ground_content = false,
+	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
+	sounds = default.node_sound_wood_defaults(),
 })
+
+minetest.register_node("myblocks:cartsroute", {
+    description = "Routenplan",
+    tiles = {"cartroute.png"},
+    paramtype2 = "wallmounted",
+    drop = "myblocks:cartsroute",
+    groups = {cracky = 3},
+    drawtype = "nodebox",
+    paramtype = "light",
+    light_source = 3,
+    node_box = {
+        type = "fixed",
+        fixed = {
+            {-0.5, -0.5, -0.5, 0.5, -0.4375, 0.5}, -- NodeBox10
+        }
+    }
+})
+
+minetest.register_node("myblocks:glow", {
+    tiles = {{
+		    name = "techage_gravel4.png",
+		    animation = {
+			    type = "vertical_frames",
+			    aspect_w = 16,
+			    aspect_h = 16,
+			    length = 0.2,
+		    },
+	    }},
+	    drawtype = "nodebox",
+	    paramtype = "light",
+	    light_source = 8,
+	    groups = {crumbly = 2, falling_node = 1},
+	    sounds = default.node_sound_gravel_defaults(),
+	    drop = "",
+      node_box = {
+        type = "fixed",
+        fixed = {
+            {-0.5, 9.5, -0.5, 0.5, 10.5, 0.5}, -- NodeBox10
+        }
+    }
+})
+
+minetest.register_node("myblocks:invisible", {
+	description = "Invisible Block",
+	drawtype = "glasslike_framed_optional",
+	tiles = {"myblocks_invisible.png"},
+	inventory_image = 'myblocks_invisible_inv.png',
+	
+	paramtype = "light",
+	light_source = 0,
+	sunlight_propagates = true,
+	is_ground_content = false,
+	groups = {cracky = 3, oddly_breakable_by_hand = 3},
+	sounds = default.node_sound_glass_defaults(),
+})
+
+
+if minetest.global_exists("armor") then
+	armor:register_armor("myblocks:krone", {
+		description = "Admin Krone",
+		inventory_image = "myblocks_inv_krone_gold.png",
+		texture = "myblocks_krone_gold.png",
+		preview = "myblocks_krone_gold_preview.png",
+		armor_groups = {fleshy=100},
+		groups = {armor_head=1, armor_heal=100, armor_use=0, armor_water=1},
+		on_drop = function(itemstack, dropper, pos)
+		  return
+		end,
+	})
+end
 
 
 minetest.register_alias("fachwerk:cherry_leaves", "myblocks:cherry_leaves")
@@ -528,3 +615,37 @@ minetest.register_alias("fachwerk:reet", "myblocks:reet")
 minetest.register_alias("access_protection:marker", "myblocks:marker")
 minetest.register_alias("fachwerk:screwdriver_diamond", "myblocks:screwdriver_diamond")
 
+
+dofile(minetest.get_modpath("myblocks") .. "/mytool.lua")
+dofile(minetest.get_modpath("myblocks") .. "/strom_tool.lua")
+dofile(minetest.get_modpath("myblocks") .. "/rooftop.lua")
+dofile(minetest.get_modpath("myblocks") .. "/christmaxx.lua")
+dofile(minetest.get_modpath("myblocks") .. "/chains.lua")
+
+local clay = {
+	{"white", "White"},
+	{"grey", "Grey"},
+	{"black", "Black"},
+	{"red", "Red"},
+	{"yellow", "Yellow"},
+	{"green", "Green"},
+	{"cyan", "Cyan"},
+	{"blue", "Blue"},
+	{"magenta", "Magenta"},
+	{"orange", "Orange"},
+	{"violet", "Violet"},
+	{"brown", "Brown"},
+	{"pink", "Pink"},
+	{"dark_grey", "Dark Grey"},
+	{"dark_green", "Dark Green"},
+}
+
+for _,item in ipairs(clay) do
+	local color = item[2]
+	minetest.register_alias("stairs:stair_"..color, "bakedclay:stair_baked_clay_"..color)
+	minetest.register_alias("stairs:slab_"..color, "bakedclay:slab_baked_clay_"..color)
+end
+
+minetest.register_alias("stairs:slab_W", "fachwerk:slab_W")
+minetest.register_alias("stairs:slab_NM", "fachwerk:slab_NM")
+minetest.register_alias("stairs:stair_junglewood_outer", "default:junglewood_outerstair")
