@@ -621,6 +621,7 @@ dofile(minetest.get_modpath("myblocks") .. "/strom_tool.lua")
 dofile(minetest.get_modpath("myblocks") .. "/rooftop.lua")
 dofile(minetest.get_modpath("myblocks") .. "/christmaxx.lua")
 dofile(minetest.get_modpath("myblocks") .. "/chains.lua")
+dofile(minetest.get_modpath("myblocks") .. "/mypattern.lua")
 
 local clay = {
 	{"white", "White"},
