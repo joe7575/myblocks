@@ -593,6 +593,52 @@ minetest.register_node("myblocks:invisible", {
 })
 
 
+minetest.register_node("myblocks:signpost", {
+	description = "Signpost",
+	drawtype = "nodebox",
+	tiles = {"techage_streetlamp2_housing.png"},
+	paramtype = "light",
+	paramtype2 = "facedir",
+	node_box = {
+		type = "fixed",
+		fixed = {-.1, -.7, -.5, .1, .3, -.35}
+	},
+	sunlight_propagates = true,
+	is_ground_content = false,
+	groups = {cracky=2, crumbly=2, choppy=2},
+	sounds = default.node_sound_defaults(),
+})
+
+minetest.register_node("myblocks:signpost_horizontal", {
+	description = "Signpost (horizontal extension)",
+	drawtype = "nodebox",
+	tiles = {"techage_streetlamp2_housing.png"},
+	paramtype = "light",
+	paramtype2 = "facedir",
+	node_box = {
+		type = "fixed",
+		fixed = {-.9, -.1, -.5, .3, .1, -.35},
+	},
+	sunlight_propagates = true,
+	is_ground_content = false,
+	groups = {cracky=2, crumbly=2, choppy=2},
+	sounds = default.node_sound_defaults(),
+})
+
+minetest.register_craft({
+	output = "myblocks:signpost 3",
+	recipe = {
+		{"techage:streetlamp_pole"},
+	},
+})
+
+minetest.register_craft({
+	output = "myblocks:signpost_horizontal 3",
+	recipe = {
+		{"techage:streetlamp_arm"},
+	},
+})
+
 if minetest.global_exists("armor") then
 	armor:register_armor("myblocks:krone", {
 		description = "Admin Krone",
