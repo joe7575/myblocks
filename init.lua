@@ -532,6 +532,7 @@ minetest.register_node("myblocks:monalisa", {
 	selection_box = board_box,
 	paramtype2 = "wallmounted",
 	paramtype = "light",
+        use_texture_alpha = "clip",
 	sunlight_propagates = true,
 	is_ground_content = false,
 	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
@@ -546,6 +547,7 @@ minetest.register_node("myblocks:cartsroute", {
     groups = {cracky = 3},
     drawtype = "nodebox",
     paramtype = "light",
+    use_texture_alpha = "clip",
     light_source = 3,
     node_box = {
         type = "fixed",
@@ -599,6 +601,7 @@ minetest.register_node("myblocks:signpost", {
 	drawtype = "nodebox",
 	tiles = {"techage_streetlamp2_housing.png"},
 	paramtype = "light",
+        use_texture_alpha = "clip",
 	paramtype2 = "colorfacedir",
 	node_box = {
 		type = "fixed",
@@ -624,6 +627,7 @@ minetest.register_node("myblocks:signpost_horizontal", {
 	drawtype = "nodebox",
 	tiles = {"techage_streetlamp2_housing.png"},
 	paramtype = "light",
+        use_texture_alpha = "clip",
 	paramtype2 = "colorfacedir",
 	node_box = {
 		type = "fixed",
@@ -1243,12 +1247,3 @@ minetest.register_lbm({
 	end,
 })
 
-
---minetest.after(10, function()
---	for name, item in pairs(minetest.registered_nodes) do
---		if string.sub(name, -3, -1) == "_15" then
---			name = string.sub(name, 1, -4) .. "_16"
---			print('"'..name..'",')
---		end
---	end
---end)
