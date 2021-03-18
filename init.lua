@@ -593,6 +593,87 @@ minetest.register_node("myblocks:invisible", {
 })
 
 
+minetest.register_node("myblocks:signpost", {
+	description = "Signpost",
+	drawtype = "nodebox",
+	tiles = {"techage_streetlamp2_housing.png"},
+	paramtype = "light",
+	paramtype2 = "colorfacedir",
+	node_box = {
+		type = "fixed",
+		fixed = {-.1, -.7, -.5, .1, .3, -.35}
+	},
+	palette = "myblocks_signpost_palette.png",
+	sunlight_propagates = true,
+	is_ground_content = false,
+	groups = {cracky=2, crumbly=2, choppy=2},
+	sounds = default.node_sound_defaults(),
+	preserve_metadata = function(pos, oldnode, oldmeta, drops)
+		for _,drop in ipairs(drops) do
+			local meta = drop:get_meta()
+			if meta:get_int("palette_index") == 0 then
+				meta:set_string("palette_index", "")
+			end
+		end
+	end,
+})
+
+minetest.register_node("myblocks:signpost_horizontal", {
+	description = "Signpost (horizontal extension)",
+	drawtype = "nodebox",
+	tiles = {"techage_streetlamp2_housing.png"},
+	paramtype = "light",
+	paramtype2 = "colorfacedir",
+	node_box = {
+		type = "fixed",
+		fixed = {-.9, -.1, -.5, .1, .1, -.35},
+	},
+	palette = "myblocks_signpost_palette.png",
+	sunlight_propagates = true,
+	is_ground_content = false,
+	groups = {cracky=2, crumbly=2, choppy=2},
+	sounds = default.node_sound_defaults(),
+	preserve_metadata = function(pos, oldnode, oldmeta, drops)
+		for _,drop in ipairs(drops) do
+			local meta = drop:get_meta()
+			if meta:get_int("palette_index") == 0 then
+				meta:set_string("palette_index", "")
+			end
+		end
+	end,
+})
+
+for idx, color in ipairs({ "white", "grey", "black", "brown", "yellow", "red", "dark_green", "blue" }) do
+	minetest.register_craft({
+		output = idx == 1 and "myblocks:signpost" or minetest.itemstring_with_palette("myblocks:signpost", (idx-1)*32),
+		type = "shapeless",
+		recipe = {
+			"myblocks:signpost", "dye:"..color
+		}
+	})
+	minetest.register_craft({
+		output = idx == 1 and "myblocks:signpost_horizontal" or minetest.itemstring_with_palette("myblocks:signpost_horizontal", (idx-1)*32),
+		type = "shapeless",
+		recipe = {
+			"myblocks:signpost_horizontal", "dye:"..color
+		}
+	})
+end
+
+minetest.register_craft({
+	output = "myblocks:signpost 3",
+	recipe = {
+		{"techage:streetlamp_pole"},
+	},
+})
+
+minetest.register_craft({
+	output = "myblocks:signpost_horizontal 3",
+	recipe = {
+		{"techage:streetlamp_arm"},
+	},
+})
+
 if minetest.global_exists("armor") then
 	armor:register_armor("myblocks:krone", {
 		description = "Admin Krone",
