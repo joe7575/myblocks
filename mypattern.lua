@@ -24,6 +24,7 @@ for i = 1,5 do
 		NodeNames[#NodeNames + 1] = name
 		minetest.register_node(name, {
 			description = "Pattern",
+			inventory_image = "myblocks_pattern_inv" .. i .. ".png",
 			tiles = {
 				"myblocks_pattern" .. i .. ".png" .. Transform[j],
 				"myblocks_invisible.png",
@@ -66,6 +67,7 @@ for i = 1,5 do
 			groups = {cracky = 3, not_in_creative_inventory = not_in_creative_inventory},
 			drawtype = "nodebox",
 			paramtype = "light",
+                        use_texture_alpha = "clip",
 			light_source = 3,
 			node_box = {
 				type = "fixed",
