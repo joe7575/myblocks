@@ -110,6 +110,49 @@ local function read_data(itemstack, placer, pointed_thing)
 			if ndef and ndef.networks then
 				print("networks: "..dump(ndef.networks))
 			end
+		elseif pointed_thing.type == "object" then
+			local object = pointed_thing.ref
+			local pos = object:get_pos()
+			local properties = object:get_properties()
+
+			if object:is_player() then
+				local name = object:get_player_name()
+				local meta = object:get_meta()
+				local physics_override = object:get_physics_override()
+				local eye_offset = object:get_eye_offset()
+
+				minetest.chat_send_player(placer:get_player_name(), "#############################################")
+				minetest.chat_send_player(placer:get_player_name(), "pos: "..dump(pos))
+				minetest.chat_send_player(placer:get_player_name(), "player name: "..name)
+				minetest.chat_send_player(placer:get_player_name(), "properties: "..dump(properties))
+				minetest.chat_send_player(placer:get_player_name(), "meta: "..dump(meta:to_table()))
+				minetest.chat_send_player(placer:get_player_name(), "physics override: "..dump(physics_override))
+				minetest.chat_send_player(placer:get_player_name(), "eye offset: "..dump(eye_offset))
+				minetest.chat_send_player(placer:get_player_name(), "###### [F10] ######")
+
+				print("#############################################")
+				print("pos: "..dump(pos))
+				print("player name: "..name)
+				print("properties: "..dump(properties))
+				print("meta: "..dump(meta:to_table()))
+				print("physics override: "..dump(physics_override))
+				print("eye offset: "..dump(eye_offset))
+				print("###### [F10] ######")
+			elseif object.get_luaentity then
+				local entity = object:get_luaentity()
+
+				minetest.chat_send_player(placer:get_player_name(), "#############################################")
+				minetest.chat_send_player(placer:get_player_name(), "pos: "..dump(pos))
+				minetest.chat_send_player(placer:get_player_name(), "entity: "..dump(entity))
+				minetest.chat_send_player(placer:get_player_name(), "properties: "..dump(properties))
+				minetest.chat_send_player(placer:get_player_name(), "###### [F10] ######")
+
+				print("#############################################")
+				print("pos: "..dump(pos))
+				print("entity: "..dump(entity))
+				print("properties: "..dump(properties))
+				print("###### [F10] ######")
+			end
 		end
 	else
 		minetest.chat_send_player(placer:get_player_name(), "You don't have 'superminer' privs!")
