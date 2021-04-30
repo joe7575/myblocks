@@ -67,7 +67,7 @@ for i = 1,5 do
 			groups = {cracky = 3, not_in_creative_inventory = not_in_creative_inventory},
 			drawtype = "nodebox",
 			paramtype = "light",
-                        use_texture_alpha = "clip",
+			use_texture_alpha = myblocks.CLIP,
 			light_source = 3,
 			node_box = {
 				type = "fixed",

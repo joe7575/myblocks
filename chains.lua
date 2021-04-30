@@ -70,7 +70,7 @@ local function register_chain(name, description, texture)
 
 		paramtype2 = "facedir",
 		climbable = true,
-                use_texture_alpha = "clip",
+		use_texture_alpha = myblocks.CLIP,
 		sunlight_propagates = true,
 		is_ground_content = false,
 		groups = {cracky = 2},

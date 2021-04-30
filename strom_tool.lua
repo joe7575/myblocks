@@ -33,7 +33,7 @@ minetest.register_node("myblocks:power_tool", {
 	description = "TA Power Tool",
 	inventory_image = "myblocks_tool2.png",
 	wield_image = "myblocks_tool2.png",
-	use_texture_alpha = true,
+	use_texture_alpha = myblocks.CLIP,
 	groups = {cracky=1, book=1},
 	on_use = show_network_data,
 	on_place = show_network_data,

@@ -13,6 +13,10 @@
 
 myblocks = {}
 
+-- Test for MT 5.4 new string mode
+myblocks.CLIP  = minetest.features.use_texture_alpha_string_modes and "clip" or false
+myblocks.BLEND = minetest.features.use_texture_alpha_string_modes and "blend" or true
+
 -- for lazy programmers
 local S = function(pos) if pos then return minetest.pos_to_string(pos) end end
 local P = minetest.string_to_pos
@@ -74,7 +78,7 @@ minetest.register_node("myblocks:leaves", {
 	tiles = {"default_leaves_simple.png"},
 	paramtype = "light",
 	is_ground_content = false,
-	use_texture_alpha = "clip",
+	use_texture_alpha = myblocks.CLIP,
 	groups = {snappy = 3, leafdecay = 3, flammable = 2, leaves = 1},
 	sounds = default.node_sound_leaves_defaults(),
 })
@@ -175,7 +179,7 @@ minetest.register_node("myblocks:shaft", {
 	paramtype = "light",
 	light_source = 9,
 	sunlight_propagates = true,
-	use_texture_alpha = true,
+	use_texture_alpha = myblocks.BLEND,
 	is_ground_content = false,
 	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3},
 	sounds = default.node_sound_glass_defaults(),
@@ -201,7 +205,7 @@ minetest.register_node("myblocks:shaftU", {
 	paramtype = "light",
 	light_source = 9,
 	sunlight_propagates = true,
-	use_texture_alpha = true,
+	use_texture_alpha = myblocks.BLEND,
 	is_ground_content = false,
 	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3},
 	sounds = default.node_sound_glass_defaults(),
@@ -214,7 +218,7 @@ minetest.register_node("myblocks:Xglass", {
 	paramtype = "light",
 	light_source = 9,
 	sunlight_propagates = true,
-	use_texture_alpha = true,
+	use_texture_alpha = myblocks.BLEND,
 	is_ground_content = false,
 	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3},
 	sounds = default.node_sound_glass_defaults(),
@@ -526,13 +530,29 @@ local board_box = {
 minetest.register_node("myblocks:monalisa", {
 	description = "MyBlocks Monalisa",
 	inventory_image = 'myblocks_monalisa.png',
-	tiles = {"myblocks_monalisa.png"},
+	tiles = {"myblocks_monalisa.png^myblocks_frame.png", "myblocks_frame.png^[transformR90"},
 	drawtype = "nodebox",
 	node_box = board_box,
 	selection_box = board_box,
 	paramtype2 = "wallmounted",
 	paramtype = "light",
-        use_texture_alpha = "clip",
+	use_texture_alpha = myblocks.CLIP,
+	sunlight_propagates = true,
+	is_ground_content = false,
+	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
+	sounds = default.node_sound_wood_defaults(),
+})
+
+minetest.register_node("myblocks:maria", {
+	description = "MyBlocks Maria",
+	inventory_image = 'myblocks_maria.png',
+	tiles = {"myblocks_maria.png^myblocks_frame.png", "myblocks_frame.png^[transformR90"},
+	drawtype = "nodebox",
+	node_box = board_box,
+	selection_box = board_box,
+	paramtype2 = "wallmounted",
+	paramtype = "light",
+	use_texture_alpha = myblocks.CLIP,
 	sunlight_propagates = true,
 	is_ground_content = false,
 	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
@@ -547,7 +567,7 @@ minetest.register_node("myblocks:cartsroute", {
     groups = {cracky = 3},
     drawtype = "nodebox",
     paramtype = "light",
-    use_texture_alpha = "clip",
+    use_texture_alpha = myblocks.CLIP,
     light_source = 3,
     node_box = {
         type = "fixed",
@@ -601,7 +621,7 @@ minetest.register_node("myblocks:signpost", {
 	drawtype = "nodebox",
 	tiles = {"techage_streetlamp2_housing.png"},
 	paramtype = "light",
-        use_texture_alpha = "clip",
+        use_texture_alpha = myblocks.CLIP,
 	paramtype2 = "colorfacedir",
 	node_box = {
 		type = "fixed",
@@ -627,7 +647,7 @@ minetest.register_node("myblocks:signpost_horizontal", {
 	drawtype = "nodebox",
 	tiles = {"techage_streetlamp2_housing.png"},
 	paramtype = "light",
-        use_texture_alpha = "clip",
+        use_texture_alpha = myblocks.CLIP,
 	paramtype2 = "colorfacedir",
 	node_box = {
 		type = "fixed",
