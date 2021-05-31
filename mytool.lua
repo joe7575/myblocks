@@ -120,6 +120,8 @@ local function read_data(itemstack, placer, pointed_thing)
 				local meta = object:get_meta()
 				local physics_override = object:get_physics_override()
 				local eye_offset = object:get_eye_offset()
+				local info = minetest.get_player_information(name) or {}
+				info.address = nil -- Don't show the IP address to respect the GDPR
 
 				minetest.chat_send_player(placer:get_player_name(), "#############################################")
 				minetest.chat_send_player(placer:get_player_name(), "pos: "..dump(pos))
@@ -128,6 +130,7 @@ local function read_data(itemstack, placer, pointed_thing)
 				minetest.chat_send_player(placer:get_player_name(), "meta: "..dump(meta:to_table()))
 				minetest.chat_send_player(placer:get_player_name(), "physics override: "..dump(physics_override))
 				minetest.chat_send_player(placer:get_player_name(), "eye offset: "..dump(eye_offset))
+				minetest.chat_send_player(placer:get_player_name(), "player information: "..dump(info))
 				minetest.chat_send_player(placer:get_player_name(), "###### [F10] ######")
 
 				print("#############################################")
@@ -137,6 +140,7 @@ local function read_data(itemstack, placer, pointed_thing)
 				print("meta: "..dump(meta:to_table()))
 				print("physics override: "..dump(physics_override))
 				print("eye offset: "..dump(eye_offset))
+				print("player information: "..dump(info))
 				print("###### [F10] ######")
 			elseif object.get_luaentity then
 				local entity = object:get_luaentity()
