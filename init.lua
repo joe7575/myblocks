@@ -108,6 +108,7 @@ if minetest.get_modpath("moreblocks") then
 		description="Apple Tree Leaves",
 		groups={snappy = 3, leafdecay = 3, flammable = 2, leaves = 1},
 		tiles={"default_leaves_simple.png"},
+		use_texture_alpha = "blend",
 		sounds = default.node_sound_leaves_defaults(),
 	})
 --	stairsplus:register_all("myblocks", "brick", "myblocks:brick", {
@@ -315,65 +316,6 @@ minetest.register_craft({
 		{"",              "default:stick", ""},
 	}
 })
-
-
---
--- Screwdriver mod
---
-if minetest.get_modpath("screwdriver") then
-
-	if screwdriver and screwdriver.handler then
-		minetest.register_tool("myblocks:screwdriver_diamond", {
-			description = "Diamond Screwdriver",
-			inventory_image = "myblocks_screwdriver.png",
-
-			on_use = function(itemstack, user, pointed_thing)
-				if user:get_player_control().sneak then
-					-- swap_node with new stored param2
-					local pos = pointed_thing.under
-					if pos then
-						local node = minetest.get_node(pos)
-						if user:get_attribute("mytool_screwdriver_name") == node.name then
-							local ndef = minetest.registered_nodes[node.name]
-							if ndef and ndef.on_rotate ~= screwdriver.disallow then
-								local param2 = user:get_attribute("mytool_screwdriver_param2")
-								minetest.swap_node(pos, {name = node.name, param2 = param2})
-							end
-						end
-					end
-				else
-					screwdriver.handler(itemstack, user, pointed_thing, screwdriver.ROTATE_FACE, 2000)
-				end
-				return itemstack
-			end,
-
-			on_place = function(itemstack, user, pointed_thing)
-				if user:get_player_control().sneak then
-					-- read param2 and node name
-					local pos = pointed_thing.under
-					if pos then
-						local node = minetest.get_node(pos)
-						user:set_attribute("mytool_screwdriver_name", node.name)
-						user:set_attribute("mytool_screwdriver_param2", node.param2)
-						minetest.chat_send_player(user:get_player_name(), "Blockausrichtung gespeichert!")
-					end
-				else
-					screwdriver.handler(itemstack, user, pointed_thing, screwdriver.ROTATE_AXIS, 2000)
-				end
-				return itemstack
-			end,
-		})
-	
-		minetest.register_craft({
-			output = "myblocks:screwdriver_diamond",
-			recipe = {
-				{"", "default:diamond", ""},
-				{"", "default:stick", ""},
-				{"", "", ""},
-			},
-		})
-	end
-end
 
 
 --
@@ -731,12 +673,14 @@ minetest.register_alias("fachwerk:bukki", "myblocks:bukki")
 minetest.register_alias("fachwerk:reet", "myblocks:reet")
 minetest.register_alias("access_protection:marker", "myblocks:marker")
 minetest.register_alias("fachwerk:screwdriver_diamond", "myblocks:screwdriver_diamond")
-
+minetest.register_alias("techage:ta4_mbldetector", "techage:ta4_mbadetector")
+minetest.register_alias("myblocks:screwdriver_diamond", "techage:screwdriver")
 
 dofile(minetest.get_modpath("myblocks") .. "/mytool.lua")
-dofile(minetest.get_modpath("myblocks") .. "/strom_tool.lua")
---dofile(minetest.get_modpath("myblocks") .. "/rooftop.lua")
+--dofile(minetest.get_modpath("myblocks") .. "/strom_tool.lua")
+dofile(minetest.get_modpath("myblocks") .. "/rooftop.lua")
 dofile(minetest.get_modpath("myblocks") .. "/christmaxx.lua")
 dofile(minetest.get_modpath("myblocks") .. "/chains.lua")
 dofile(minetest.get_modpath("myblocks") .. "/mypattern.lua")
 dofile(minetest.get_modpath("myblocks") .. "/moreblocks.lua")
+dofile(minetest.get_modpath("myblocks") .. "/cartdispenser.lua")

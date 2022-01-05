@@ -84,7 +84,7 @@ local NodeNames1 = {
 	"fachwerk:B",
 	"fachwerk:NM",
 	"fachwerk:NE",
-	"myblocks:bukki",
+	--"myblocks:bukki",
 	"myblocks:reet",
 	"myblocks:brick",
 	"myblocks:leaves",
@@ -92,7 +92,9 @@ local NodeNames1 = {
 	"building_blocks:hardwood",
 	"building_blocks:Roofing",
 	"building_blocks:Marble",
-	"castle_masonry:pavement_brick",
+	"castle:pavement_brick",
+	"techage:basalt_glass",
+	"techage:basalt_glass2",
 }
 
 local NodeNames2 = {
@@ -668,3 +670,6 @@ minetest.register_alias("stairs:slab_W", "fachwerk:slab_W")
 minetest.register_alias("stairs:slab_NM", "fachwerk:slab_NM")
 minetest.register_alias("stairs:stair_junglewood_outer", "default:junglewood_outerstair")
 
+minetest.register_alias("myblocks:bukki_panel", "myblocks:panel_bukki")
+minetest.register_alias("myblocks:bukki_doublepanel", "myblocks:stair_bukki")
+minetest.register_alias("myblocks:bukki_cube", "myblocks:micro_bukki")

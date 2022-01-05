@@ -4,27 +4,11 @@
 --
 local function clear_objects(itemstack, placer, pointed_thing)
 	local pos = placer:get_pos()
-	local pos1x, pos1y, pos1z = pos.x - 1.5, pos.y - 0.5, pos.z - 1.5
-	local pos2x, pos2y, pos2z = pos.x + 1.5, pos.y + 2.5, pos.z + 1.5
-
 	for _, obj in pairs(minetest.get_objects_inside_radius(pos, 3)) do
-		local entity = obj:get_luaentity()
-		print("entity")
-		-- Avoid players
 		if not obj:is_player() then
-			local pos = obj:getpos()
-			print(dump(pos))
-			if pos.x >= pos1x and pos.x <= pos2x and
-					pos.y >= pos1y and pos.y <= pos2y and
-					pos.z >= pos1z and pos.z <= pos2z then
-				-- Inside region
-				obj:remove()
-			end
+			obj:remove()
 		end
 	end
-	
-	minetest.forceload_free_block(pos, true)
-	minetest.forceload_free_block(pos, false)
 end
 
 local function remove_node(itemstack, placer, pointed_thing)
