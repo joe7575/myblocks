@@ -653,7 +653,7 @@ minetest.register_craft({
 })
 
 if minetest.global_exists("armor") then
-	armor:register_armor("myblocks:krone", {
+	armor:register_armor("myblocks:krone_material", {
 		description = "Admin Krone",
 		inventory_image = "myblocks_inv_krone_gold.png",
 		texture = "myblocks_krone_gold.png",
