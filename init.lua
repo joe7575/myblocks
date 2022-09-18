@@ -2,12 +2,9 @@
 
 	MyBlocks
 
-	Copyright (C) 2018 Joachim Stolberg
+	Copyright (C) 2018-2022 Joachim Stolberg
 	LGPLv2.1+
 	See LICENSE.txt for more information
-
-	History:
-	2018-11-24  v0.01  first version
 
 ]]--
 
@@ -568,6 +565,35 @@ minetest.register_node("myblocks:invisible", {
 	sounds = default.node_sound_glass_defaults(),
 })
 
+minetest.register_craft({
+	type = "cooking",
+	output = "myblocks:invisible",
+	recipe = "default:glass",
+})
+
+minetest.register_node("myblocks:light", {
+	description = "Light Block",
+	drawtype = "glasslike_framed_optional",
+	tiles = {"myblocks_invisible.png"},
+	inventory_image = 'myblocks_invisible_inv.png',
+
+	paramtype = "light",
+	light_source = 12,
+        walkable = false,
+	sunlight_propagates = true,
+	is_ground_content = false,
+	groups = {cracky = 3, oddly_breakable_by_hand = 3},
+	sounds = default.node_sound_glass_defaults(),
+})
+
+minetest.register_craft({
+	output = "myblocks:light",
+	recipe = {
+		{"", "default:torch", ""},
+		{"", "myblocks:invisible", ""},
+		{"", "default:torch", ""},
+	},
+})
 
 minetest.register_node("myblocks:signpost", {
 	description = "Signpost",

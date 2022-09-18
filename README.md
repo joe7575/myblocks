@@ -1,6 +1,6 @@
 # myblocks
 
-Some more or less useful blocks and tools, used on the server "Joes Miniwelt".
+Some more or less useful blocks and tools, used on the server "Joes Miniwelt" and "Tech Age Surival".
 
 ## Dependencies
 default  
