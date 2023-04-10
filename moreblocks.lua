@@ -673,3 +673,17 @@ minetest.register_alias("stairs:stair_junglewood_outer", "default:junglewood_out
 minetest.register_alias("myblocks:bukki_panel", "myblocks:panel_bukki")
 minetest.register_alias("myblocks:bukki_doublepanel", "myblocks:stair_bukki")
 minetest.register_alias("myblocks:bukki_cube", "myblocks:micro_bukki")
+
+minetest.register_alias("stairs:slab_cyanbrick", "stairs:slab_bakedclay_blocks_cyanbrick")
+minetest.register_alias("stairs:stair_cyanbrick", "stairs:stair_bakedclay_blocks_cyanbrick")
+minetest.register_alias("stairs:slab_brownbrick", "stairs:slab_bakedclay_blocks_brownbrick")
+minetest.register_alias("stairs:stair_brownbrick", "stairs:stair_bakedclay_blocks_brownbrick")
+minetest.register_alias("stairs:slab_whitebrick", "stairs:slab_bakedclay_blocks_whitebrick")
+minetest.register_alias("stairs:stair_whitebrick", "stairs:stair_bakedclay_blocks_whitebrick")
+
+minetest.register_alias("stairs:slab_cyanblock", "stairs:slab_bakedclay_blocks_cyanblock")
+minetest.register_alias("stairs:stair_cyanblock", "stairs:stair_bakedclay_blocks_cyanblock")
+minetest.register_alias("stairs:slab_brownblock", "stairs:slab_bakedclay_blocks_brownblock")
+minetest.register_alias("stairs:stair_brownblock", "stairs:stair_bakedclay_blocks_brownblock")
+minetest.register_alias("stairs:slab_whiteblock", "stairs:slab_bakedclay_blocks_whiteblock")
+minetest.register_alias("stairs:stair_whiteblock", "stairs:stair_bakedclay_blocks_whiteblock")

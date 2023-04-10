@@ -345,6 +345,41 @@ minetest.register_craft({
     }
 })
 
+--
+-- Wellblech
+--
+minetest.register_node("myblocks:corrugated_iron", {
+	description = "Corrugated Iron",
+	tiles = {
+		-- up, down, right, left, back, front
+		"myblocks_corrugated_iron.png",
+		"myblocks_corrugated_iron.png",
+		"myblocks_corrugated_iron.png^[transformR90",
+	},
+	is_ground_content = true,
+	groups = {cracky = 1, level = 2},
+	sounds = default.node_sound_metal_defaults(),
+})
+
+if minetest.get_modpath("moreblocks") then
+	stairsplus:register_all("myblocks", "corrugated_iron", "myblocks:corrugated_iron", {
+		description = "Corrugated Iron",
+		tiles = {"myblocks_corrugated_iron.png"},
+		is_ground_content = true,
+		groups = {cracky = 1, level = 2},
+		sounds = default.node_sound_metal_defaults(),
+	})
+end
+
+minetest.register_craft({
+    output = "myblocks:corrugated_iron",
+    recipe = {
+        {"","default:steel_ingot", ""},
+        {"default:steel_ingot","group:wood", "default:steel_ingot"},
+        {"","default:steel_ingot", ""}
+    }
+})
+
 
 --
 -- Zauberstab
