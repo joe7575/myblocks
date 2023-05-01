@@ -96,7 +96,7 @@ minetest.register_node("myblocks:present", {
 		"present_side.png",
 		"present_side.png"
 	},
-	groups = {cracky = 3},
+	groups = {cracky = 3, not_in_creative_inventory = 1},
 	drawtype = "nodebox",
 	paramtype = "light",
 	node_box = {

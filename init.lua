@@ -76,7 +76,7 @@ minetest.register_node("myblocks:leaves", {
 	paramtype = "light",
 	is_ground_content = false,
 	use_texture_alpha = myblocks.CLIP,
-	groups = {snappy = 3, leafdecay = 3, flammable = 2, leaves = 1},
+	groups = {snappy = 3, leafdecay = 3, flammable = 2, leaves = 1, not_in_creative_inventory = 1},
 	sounds = default.node_sound_leaves_defaults(),
 })
 
@@ -549,7 +549,7 @@ minetest.register_node("myblocks:cartsroute", {
     tiles = {"cartroute.png"},
     paramtype2 = "wallmounted",
     drop = "myblocks:cartsroute",
-    groups = {cracky = 3},
+    groups = {cracky = 3, not_in_creative_inventory = 1},
     drawtype = "nodebox",
     paramtype = "light",
     use_texture_alpha = myblocks.CLIP,
@@ -575,7 +575,7 @@ minetest.register_node("myblocks:glow", {
 	    drawtype = "nodebox",
 	    paramtype = "light",
 	    light_source = 8,
-	    groups = {crumbly = 2, falling_node = 1},
+	    groups = {crumbly = 2, falling_node = 1, not_in_creative_inventory = 1},
 	    sounds = default.node_sound_gravel_defaults(),
 	    drop = "",
       node_box = {
