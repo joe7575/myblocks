@@ -49,20 +49,22 @@ local function read_data(itemstack, placer, pointed_thing)
 			local nvm = techage.get_nvm(pos)
 			local meta = minetest.get_meta(pos)
 			local node = minetest.get_node(pos)
-			if node.name == "protector:protect"	or node.name == "protector:protect2" then
-				local owner = meta:get_string("owner")
-				local members = meta:get_string("members")
-				if members ~= "" then
-					local names = {}
-					for _,s in ipairs(string.split(members, " ")) do
-						names[s] = true
+			if minetest.get_modpath("sections") then
+				if node.name == "protector:protect" or node.name == "protector:protect2" then
+					local owner = meta:get_string("owner")
+					local members = meta:get_string("members")
+					if members ~= "" then
+						local names = {}
+						for _,s in ipairs(string.split(members, " ")) do
+							names[s] = true
+						end
+						sections.protect_area(pos, placer:get_player_name(), owner, names)
+					else
+						sections.protect_area(pos, placer:get_player_name(), owner)
 					end
-					sections.protect_area(pos, placer:get_player_name(), owner, names)
-				else
-					sections.protect_area(pos, placer:get_player_name(), owner)
+					minetest.remove_node(pos)
+					return
 				end
-				minetest.remove_node(pos)
-				return
 			end
 			--minetest.swap_node(pos, node) was soll das hier?
 			local ndef = minetest.registered_nodes[node.name] or minetest.registered_items[node.name] or minetest.registered_craftitems[node.name]

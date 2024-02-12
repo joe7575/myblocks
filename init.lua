@@ -746,6 +746,8 @@ dofile(minetest.get_modpath("myblocks") .. "/mypattern.lua")
 dofile(minetest.get_modpath("myblocks") .. "/moreblocks.lua")
 dofile(minetest.get_modpath("myblocks") .. "/cartdispenser.lua")
 dofile(minetest.get_modpath("myblocks") .. "/dishes.lua")
+--dofile(minetest.get_modpath("myblocks") .. "/items.lua")
+--dofile(minetest.get_modpath("myblocks") .. "/christmaxx.lua")
 
 if minetest.global_exists("armor") and minetest.global_exists("wielded_light") then
 	dofile(minetest.get_modpath("myblocks") .. "/headwear.lua")
