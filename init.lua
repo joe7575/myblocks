@@ -752,3 +752,29 @@ dofile(minetest.get_modpath("myblocks") .. "/dishes.lua")
 if minetest.global_exists("armor") and minetest.global_exists("wielded_light") then
 	dofile(minetest.get_modpath("myblocks") .. "/headwear.lua")
 end
+
+minetest.register_node("myblocks:curtain_rod", {
+	description = "Curtain Rod",
+	drawtype = "nodebox",
+	tiles = { "default_wood.png" },
+	paramtype = "light",
+	paramtype2 = "facedir",
+	sunlight_propagates = true,
+	groups = { flammable = 3, snappy = 3 },
+	sounds = default.node_sound_wood_defaults(),
+	node_box = {
+		type = "fixed",
+		fixed = { -0.625, -0.5, 0.375, 0.625, -0.375, 0.5 },
+	},
+	selection_box = {
+		type = "fixed",
+		fixed = { -0.625, -0.5, 0.375, 0.625, -0.375, 0.5 },
+	},
+})
+
+minetest.register_craft({
+	output = "myblocks:curtain_rod",
+	recipe = {
+		{"default:stick", "default:stick", "default:stick"},
+	},
+})
