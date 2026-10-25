@@ -680,6 +680,8 @@ minetest.register_alias("stairs:slab_brownbrick", "stairs:slab_bakedclay_blocks_
 minetest.register_alias("stairs:stair_brownbrick", "stairs:stair_bakedclay_blocks_brownbrick")
 minetest.register_alias("stairs:slab_whitebrick", "stairs:slab_bakedclay_blocks_whitebrick")
 minetest.register_alias("stairs:stair_whitebrick", "stairs:stair_bakedclay_blocks_whitebrick")
+minetest.register_alias("stairs:slab_blackbrick", "stairs:slab_bakedclay_blocks_blackbrick")
+minetest.register_alias("stairs:stair_blackbrick", "stairs:stair_bakedclay_blocks_blackbrick")
 
 minetest.register_alias("stairs:slab_cyanblock", "stairs:slab_bakedclay_blocks_cyanblock")
 minetest.register_alias("stairs:stair_cyanblock", "stairs:stair_bakedclay_blocks_cyanblock")
@@ -687,3 +689,6 @@ minetest.register_alias("stairs:slab_brownblock", "stairs:slab_bakedclay_blocks_
 minetest.register_alias("stairs:stair_brownblock", "stairs:stair_bakedclay_blocks_brownblock")
 minetest.register_alias("stairs:slab_whiteblock", "stairs:slab_bakedclay_blocks_whiteblock")
 minetest.register_alias("stairs:stair_whiteblock", "stairs:stair_bakedclay_blocks_whiteblock")
+minetest.register_alias("stairs:slab_blackblock", "stairs:slab_bakedclay_blocks_blackblock")
+minetest.register_alias("stairs:stair_blackblock", "stairs:stair_bakedclay_blocks_blackblock")
+minetest.register_alias("techage:basalt_glass_microslab", "techage:slab_basalt_glass_1")

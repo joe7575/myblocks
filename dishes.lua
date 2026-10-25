@@ -1,5 +1,5 @@
 minetest.register_node("myblocks:wine_bottle", {
-	description = "Wine bottle",
+	description = "Wine bottle (from Home Decor Shop at spawn)",
 	drawtype = "plantlike",
 	tiles = {"myblocks_wine_bottle.png"},
 	inventory_image = "myblocks_wine_bottle_inv.png",
@@ -16,7 +16,7 @@ minetest.register_node("myblocks:wine_bottle", {
 })
 
 minetest.register_node("myblocks:beer_glass", {
-	description = "Beer glass",
+	description = "Beer glass (from Home Decor Shop at spawn)",
 	drawtype = "plantlike",
 	tiles = {"myblocks_beer_glass.png"},
 	inventory_image = "myblocks_beer_glass_inv.png",
@@ -33,7 +33,7 @@ minetest.register_node("myblocks:beer_glass", {
 })
 
 minetest.register_node("myblocks:wine_glass", {
-	description = "Wine glass",
+	description = "Wine glass (from Home Decor Shop at spawn)",
 	drawtype = "plantlike",
 	tiles = {"myblocks_wine_glass.png"},
 	inventory_image = "myblocks_wine_glass_inv.png",
@@ -51,7 +51,7 @@ minetest.register_node("myblocks:wine_glass", {
 })
 
 minetest.register_node("myblocks:soup_bowl", {
-	description = "Soup bowl",
+	description = "Soup bowl (from Home Decor Shop at spawn)",
 	drawtype = "plantlike",
 	tiles = {"myblocks_soup_bowl.png"},
 	inventory_image = "myblocks_soup_bowl.png",
@@ -68,7 +68,7 @@ minetest.register_node("myblocks:soup_bowl", {
 })
 
 minetest.register_node("myblocks:red_bowl", {
-	description = "Red bowl",
+	description = "Red bowl (from Home Decor Shop at spawn)",
 	drawtype = "plantlike",
 	tiles = {"myblocks_red_bowl.png"},
 	inventory_image = "myblocks_red_bowl_inv.png",
@@ -85,7 +85,7 @@ minetest.register_node("myblocks:red_bowl", {
 })
 
 minetest.register_node("myblocks:coke_bottle", {
-	description = "Coke bottle",
+	description = "Coke bottle (from Home Decor Shop at spawn)",
 	drawtype = "plantlike",
 	tiles = {"myblocks_coke_bottle.png"},
 	inventory_image = "myblocks_coke_bottle_inv.png",
@@ -103,7 +103,7 @@ minetest.register_node("myblocks:coke_bottle", {
 })
 
 minetest.register_node("myblocks:coke_glass", {
-	description = "Coke glass",
+	description = "Coke glass (from Home Decor Shop at spawn)",
 	drawtype = "plantlike",
 	tiles = {"myblocks_coke_glass.png"},
 	inventory_image = "myblocks_coke_glass_inv.png",
@@ -121,7 +121,7 @@ minetest.register_node("myblocks:coke_glass", {
 })
 
 minetest.register_node("myblocks:milk_bottle", {
-	description = "Milk bottle",
+	description = "Milk bottle (from Home Decor Shop at spawn)",
 	drawtype = "plantlike",
 	tiles = {"myblocks_milk_bottle.png"},
 	inventory_image = "myblocks_milk_bottle_inv.png",
@@ -139,7 +139,7 @@ minetest.register_node("myblocks:milk_bottle", {
 })
 
 minetest.register_node("myblocks:milk_glass", {
-	description = "Milk glass",
+	description = "Milk glass (from Home Decor Shop at spawn)",
 	drawtype = "plantlike",
 	tiles = {"myblocks_milk_glass.png"},
 	inventory_image = "myblocks_milk_glass_inv.png",
